@@ -1,0 +1,53 @@
+{
+  "name": "web3-error-boundry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "unpkg": "dist/umd/rooks.umd.js",
+  "types": "dist/types/index.d.ts",
+  "typings": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "format": "yarn run prettier --write \"./src/*.+(js|jsx|ts|tsx)\" && yarn run prettier --write \"./docs/*.+(md|mdxx)\"",
+    "test": "jest",
+    "coverage": "yarn test --coverage",
+    "prebuild": "rimraf dist",
+    "build:esm": "tsc -m esNext --outDir dist/esm && resolve-tspaths -o dist/esm",
+    "build:cjs": "tsc -m commonjs --outDir dist/cjs && resolve-tspaths -o dist/cjs",
+    "build:umd": "rollup -c rollup.config.ts --configPlugin typescript",
+    "build:types": "rollup -c dts.rollup.config.js",
+    "build": "yarn build:esm && yarn build:cjs && yarn build:umd && yarn build:types"
+  },
+  "keywords": [],
+  "author": "sam bacha",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@rollup/plugin-typescript": "^8.3.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^28.1.6",
+    "@types/node": "^16.11.48",
+    "@types/react": "^17.0.48",
+    "@types/react-dom": "^18.0.6",
+    "clsx": "^1.2.1",
+    "esbuild": "^0.15.2",
+    "jest": "^28.1.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resolve-tspaths": "^0.7.4",
+    "rollup": "^2.77.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "terser": "^5.14.2",
+    "ts-jest": "^28.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0  || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0  || ^17.0.0 || ^18.0.0"
+  }
+}
