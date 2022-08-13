@@ -1,19 +1,23 @@
+
 import {Router} from "next/router"
-import {RedirectError} from "@blitzjs/core/server/dist/blitzjs-core-server.esm"
+import {RedirectError} from  "@blitzjs/core/server/dist/blitzjs-core-server.esm"
 import * as React from "react"
-import { RouterContext } from "@blitzjs/core/dist/declarations/src/router"
-export {RouterContext} from "@blitzjs/core/server/dist/blitzjs-core-server.cjs.dev.js"
-//  /dist/next/dist/next-server/lib/router-context"
+
+export const Router = NextRouter
+export {createRouter, makePublicRouterInstance} from "@blitzjs/core/server/dist/blitzjs-core-server.esm"
+export {RouterContext} from  "@blitzjs/core/server/dist/blitzjs-core-server.esm"
+
+
+import {ZodError} from "zod"
+
 export const isServer = typeof window === "undefined"
 export const isClient = typeof window !== "undefined"
 
 export function clientDebug(...args: any) {
-  if (typeof window !== "undefined" && (window as any)["DEBUG_DISCO3"]) {
-    console.log("[DISCO3]", Date.now(), ...args)
+  if (typeof window !== "undefined" && (window as any)["DEBUG_BLITZ"]) {
+    console.log("[BLITZ]", Date.now(), ...args)
   }
 }
-
-
 const changedArray = (a: Array<unknown> = [], b: Array<unknown> = []) =>
   //eslint-disable-next-line es5/no-es6-static-methods
   a.length !== b.length || a.some((item, index) => !Object.is(item, b[index]))
@@ -102,9 +106,7 @@ class ErrorBoundary extends React.Component<
 
   async componentDidCatch(error: Error, info: React.ErrorInfo) {
     if (error instanceof RedirectError) {
-      // @ts-ignore
       clientDebug("Redirecting from ErrorBoundary to", error.url)
-      // @ts-ignore
       await (this.context as Router)?.push(error.url)
       return
     }
